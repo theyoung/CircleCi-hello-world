@@ -1,15 +1,16 @@
 version: 2.1
 
+commands:
+  print_pipeline_id:
+    steps:
+      - run: echo ${CIRCLE_WORKFLOW_ID}
+
 jobs:
   save_hello_world_output:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - run: echo "hello world" > ~/output.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - output.txt
+      - print_pipeline_id
 
   print_output_file:
     docker:
@@ -23,6 +24,3 @@ workflows:
   my_workflow:
     jobs:
       - save_hello_world_output
-      - print_output_file:
-          requires:
-            - save_hello_world_output
