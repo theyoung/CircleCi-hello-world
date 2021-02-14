@@ -10,6 +10,10 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get -y install awscli
+      - run:
+          name: 'echo information'
+          command: |
+            aws ec2 describe-instances --filters Name=tag:Name,Values=backend-*
 
 workflows:
   my_workflow:
