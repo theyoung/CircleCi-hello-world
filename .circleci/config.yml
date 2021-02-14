@@ -1,28 +1,15 @@
 version: 2.1
 
-commands:
-  print_pipeline_id:
-    steps:
-      - run: return 1
-
 jobs:
   save_hello_world_output:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - print_pipeline_id
       - run:
-          name: 'error'
-          command: echo 'error'
-          when: on_fail
-
-  print_output_file:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run: cat ~/output.txt
+          name: 'cli-test'
+          command: |
+            sudo apt-get update
+            sudo apt-get -y install awscli
 
 workflows:
   my_workflow:
